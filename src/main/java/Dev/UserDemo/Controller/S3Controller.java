@@ -13,6 +13,7 @@ public class S3Controller {
 
     private final S3Service s3Service;
 
+    @PostMapping("upload")
     public String upload(@RequestParam("file")MultipartFile file){
         return s3Service.saveFile(file);
     }
@@ -27,7 +28,6 @@ public class S3Controller {
         return s3Service.deleteFile(filename);
     }
 
-    @PostMapping("upload")
     @GetMapping("list")
     public List<String> getAllFiles(){
         return s3Service.listAllFiles();
