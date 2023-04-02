@@ -20,4 +20,6 @@ public class UserResponse {
     private String gender;
 
     private Instant createdDate;
+
+    private String imageFileName;
 }

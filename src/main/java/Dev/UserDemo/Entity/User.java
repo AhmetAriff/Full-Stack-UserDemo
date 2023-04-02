@@ -34,5 +34,7 @@ public class User {
 
     private Instant createdDate;
 
+    private String imageFileName;
+
 
 }

@@ -15,4 +15,6 @@ public class UpdateUserRequest {
     private String address;
 
     private String gender;
+
+    private String imageFileName;
 }

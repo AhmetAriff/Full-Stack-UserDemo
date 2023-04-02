@@ -2,6 +2,10 @@ package Dev.UserDemo.Controller;
 
 import Dev.UserDemo.Service.Abstract.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class S3Controller {
 
     private final S3Service s3Service;
@@ -19,8 +24,12 @@ public class S3Controller {
     }
 
     @GetMapping("download/{filename}")
-    public byte[] download(@PathVariable("filename") String filename){
-        return s3Service.downloadFile(filename);
+    public ResponseEntity<byte[]> download(@PathVariable("filename") String filename){
+        byte[] imageBytes = s3Service.downloadFile(filename);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentLength(imageBytes.length);
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 
     @DeleteMapping("{filename}")
