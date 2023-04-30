@@ -13,17 +13,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/s3")
 @CrossOrigin("*")
 public class S3Controller {
 
     private final S3Service s3Service;
 
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public String upload(@RequestParam("file")MultipartFile file){
         return s3Service.saveFile(file);
     }
 
-    @GetMapping("download/{filename}")
+    @GetMapping("/download/{filename}")
     public ResponseEntity<byte[]> download(@PathVariable("filename") String filename){
         byte[] imageBytes = s3Service.downloadFile(filename);
         HttpHeaders headers = new HttpHeaders();
@@ -32,12 +33,12 @@ public class S3Controller {
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 
-    @DeleteMapping("{filename}")
+    @DeleteMapping("/{filename}")
     public String deleteFile(@PathVariable("filename") String filename){
         return s3Service.deleteFile(filename);
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public List<String> getAllFiles(){
         return s3Service.listAllFiles();
     }
